@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 
 public class MessageDto {
 	
-	private String recipient_id ;
+	
 	
 	private String Content;
-
+	private String recipient_id ;
 }

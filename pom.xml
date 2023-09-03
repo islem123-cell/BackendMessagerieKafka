@@ -85,6 +85,11 @@
 
 
 		<!--Rel time-->
+		<dependency>
+			<groupId>com.example</groupId>
+			<artifactId>chatappback</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

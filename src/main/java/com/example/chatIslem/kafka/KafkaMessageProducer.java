@@ -21,13 +21,9 @@ public class KafkaMessageProducer {
 	
 	@Autowired
 	private KafkaTemplate<String, Messages> kafkaTemplate;
-	 private final MessageRepository messageRepository1;
+	@Autowired
+	 private  MessageRepository messageRepository1;
 
-	public KafkaMessageProducer(KafkaTemplate<String, Messages> kafkaTemplate, MessageRepository messageRepository1) {
-		super();
-		this.kafkaTemplate = kafkaTemplate;
-		this.messageRepository1 = messageRepository1;
-	}
 	
 
 	public void sendMessage(Messages data) {

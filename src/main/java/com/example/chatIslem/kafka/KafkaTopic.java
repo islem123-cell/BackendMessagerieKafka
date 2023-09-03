@@ -13,4 +13,16 @@ public class KafkaTopic {
 		return TopicBuilder.name("Messages")
 				.build();
 	}
+	
+	
+
+
+   // public static final String ROOM_ID_SEPARATOR = "test";
 }
+
+
+
+/*	@Bean
+	 public NewTopic Notifications () {
+		return TopicBuilder.name("Notifications").build();
+	}*/

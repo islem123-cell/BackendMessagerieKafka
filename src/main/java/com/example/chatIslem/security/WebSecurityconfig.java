@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableMethodSecurity
-public class WebSecurityconfig {
+public class WebSecurityconfig   {
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 
@@ -54,8 +54,9 @@ public class WebSecurityconfig {
         http.csrf(csrf -> csrf.disable())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth ->  auth.requestMatchers("/api/auth/**","/api/messages/**","/api/messages/**","/messages/**").permitAll().requestMatchers("/api/test/**")
-                        .permitAll()
+                .authorizeHttpRequests(auth ->  auth.requestMatchers("/api/auth/**","/api/conv/**","/api/messages/**", "/notifications/**").permitAll()
+                		.requestMatchers("/api/test/**").permitAll() 
+                	
                         .anyRequest().authenticated());
 
         http.authenticationProvider(authenticationProvider());

@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+/*
 @RestController
 @RequestMapping("/api/test")
 public class UserController {
@@ -33,10 +33,10 @@ public class UserController {
         return new ResponseEntity<>(userService.saveUser(user), HttpStatus.OK);
     }
 
-          @GetMapping("/AllUser")
+          /*@GetMapping("/AllUser")
           public ResponseEntity<?> getAllUsers(){
               return new ResponseEntity<>(userService.getAllUser(),HttpStatus.OK);
-            }
+            }*//*
     @GetMapping("/AllUserEnabled")
     public ResponseEntity<?> getAllUsersEnabled(){
         return new ResponseEntity<>(userService.findAllUserEnabled(),HttpStatus.OK);
@@ -48,7 +48,7 @@ public class UserController {
         }
 
 
-        @DeleteMapping("/{id}")
+   /*     @DeleteMapping("/{id}")
         public ResponseEntity<?> deletUser(@PathVariable String id){
             UserModel user=userService.getUser(id);
             try {
@@ -58,7 +58,43 @@ public class UserController {
                 throw new EntityNotFoundException("user not found with id "+id);
             }
             return ResponseEntity.ok("user with id "+id+" is deleted !");
-        }
+        }*//*
+        
+
+   @GetMapping("/{username}")
+       public ResponseEntity<?> getByUsername(@PathVariable String username){
+           return new ResponseEntity<>(userService.getUserByUsername(username), HttpStatus.OK);
+       }
+      
+       @DeleteMapping("/{id}")
+   	    public ResponseEntity<Boolean> deleteUser(@PathVariable String id) {
+   	        boolean deleted = userService.deleteUser(id);
+   	        if (deleted) {
+   	            return ResponseEntity.ok(deleted);
+   	        } else {
+   	            return ResponseEntity.notFound().build();
+   	        }
+   	    }
+      
+       @PutMapping("/user/{id}")
+   	    public ResponseEntity<UserModel> updateUser1(@PathVariable String id, @RequestBody UserModel user) {
+   	        UserModel updatedUser = userService.updateUser(id, user);
+   	        if (updatedUser != null) {
+   	            return ResponseEntity.ok(updatedUser);
+   	        } else {
+   	            return ResponseEntity.notFound().build();
+   	        }
+   	    }
+   	  
+       @PutMapping("/{username}")
+       public ResponseEntity<UserModel> updateUser(@PathVariable String username, @RequestBody UserModel user) {
+           UserModel updatedUser = userService.updateUserByUsername(username, user);
+           if (updatedUser != null) {
+               return ResponseEntity.ok(updatedUser);
+           } else {
+               return ResponseEntity.notFound().build();
+           }
+       }
 
     @GetMapping("/Erole")
     public ResponseEntity<?> getrole( ERole role){
@@ -68,3 +104,4 @@ public class UserController {
 
 
 }
+*/

@@ -13,6 +13,7 @@ import com.example.chatIslem.security.services.UserDetailsImpl;
 import com.example.chatIslem.services.user.RoleService;
 import com.example.chatIslem.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -43,6 +44,9 @@ public class AuthController {
     RoleRepository roleService;
     @Autowired
     JwtUtils jwtUtils;
+    
+  
+    
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -61,9 +65,8 @@ public class AuthController {
                 .token(jwt)
                 .refreshToken(refreshJwt)
                 .roles(roles)
-                .build());
-    }
-
+                .build()); }
+    
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         if (userService.existsUserByUsername(signUpRequest.getUsername())) {
@@ -85,14 +88,15 @@ public class AuthController {
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
 
-        Set<String> strRoles = signUpRequest.getRoles();
-        Set<Role> roles = new HashSet<>();
+     Set<String> strRoles = signUpRequest.getRoles();
+     
+     Set<Role> roles = new HashSet<>();
 
-        if (strRoles == null) {
+      // if (strRoles == null) {
             Role userRole = roleService.findByName(ERole.ROLE_USER)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(userRole);
-        } else {
+      /*  } else {
             strRoles.forEach(role -> {
                 switch (role) {
                     case "admin":
@@ -108,9 +112,8 @@ public class AuthController {
                         roles.add(userRole);
                 }
             });
-        }
-
-        user.setRoles(roles);
+        }*/
+        user.setRoles(roles);  
         userService.saveUser(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));

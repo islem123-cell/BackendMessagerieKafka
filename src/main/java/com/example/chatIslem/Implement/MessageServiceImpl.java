@@ -57,4 +57,21 @@ public class MessageServiceImpl implements MessageService {
 		return null;
 	}
 
+
+	@Override
+	public List<Messages> getMessagesBySenderId(int senderId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List<Messages> getMessagesByRecipientId(int recipientId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
 }
