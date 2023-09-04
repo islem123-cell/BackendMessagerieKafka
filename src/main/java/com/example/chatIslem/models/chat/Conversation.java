@@ -34,9 +34,9 @@ public class Conversation {
 	*/
 	
 	@DBRef
-	private List<UserModel> participants;
+	private List<UserModel> participants=new ArrayList<>();
 
-	public List<Messages> message;
+	public List<Messages> message=new ArrayList<>();
 		
 //	@DBRef
 	//private List<Messages> messages ;

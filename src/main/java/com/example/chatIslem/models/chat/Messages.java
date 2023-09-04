@@ -1,6 +1,8 @@
 package com.example.chatIslem.models.chat;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -29,11 +31,11 @@ public class Messages{
 	private Date DateEnvoie;
 	
 	
-	  private String chatId;
+	  private String convId;
 
 	 private UserModel sender;
-    private UserModel recipient;
-    private String Content;
+    private List<UserModel> recipient=new ArrayList();
+  
     
    // private Status status;
     

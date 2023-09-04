@@ -1,5 +1,6 @@
 package com.example.chatIslem.Implement;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +31,9 @@ public class ConversationServiceImpl implements ConversationService {
 	 
 	 private UserRepository userRepository;
     
+	 
+ private List<Conversation> conversations = new ArrayList<>();
+
 
 	
 	
@@ -124,11 +128,6 @@ public class ConversationServiceImpl implements ConversationService {
 		
 	}
 
-	@Override
-	public List<Conversation> getAllConversations() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 /*	@Override
 	public Conversation findConversationList(UserModel sender, UserModel recipient) {
@@ -171,10 +170,24 @@ public Conversation createNewConv(Conversation coversation) {
 	return conversationRepository.save(coversation);
 }
 
+@Override
+public Conversation getConversationById(String id) {
+	Conversation conv=conversationRepository.findById(id).get();
+			//.orElseThrow(()-> new EntityNotFoundException("Conversation Not Found with id : " +id));
+	return conv;
+}
 
 
 
+public List<Conversation> getAllConversations() {
+    return conversationRepository.findAll();
+}
 
+@Override
+public List<UserModel> getAllUsers() {
+	// TODO Auto-generated method stub
+	return userRepository.findAll();
+}
 
 
 

@@ -14,11 +14,13 @@ public interface ConversationService {
 	
 	
 	 
+	 List<UserModel> getAllUsers();
 
-	
+	Conversation getConversationById(String id);
 	
 	 void addMessageToConversation(String conversationId, Messages message);
-	    List<Conversation> getAllConversations();
+	 
+	 List<Conversation> getAllConversations();
 	
     List<Messages> getConversationMessages(String conversationId);
 

@@ -1,11 +1,14 @@
 package com.example.chatIslem.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +27,7 @@ import com.example.chatIslem.services.user.UserService;
 import com.example.chatIslem.utils.TokenUtils;
 
 
+@CrossOrigin(origins = "http://localhost:3000")
 
 @RestController
 @RequestMapping("/api/conv")
@@ -46,16 +50,23 @@ public class ConversationController {
 	  @PostMapping("/create")
 	    public ResponseEntity<?> createConversation(@RequestBody ConversationRequest request) {
 		  String idConect=tokenUtils.ExtractId();
-		  System.out.print("rrrrrrrrrrrrrrrrrrr");
-			if(request.getSelectedUserIds().size() > 1 ) {
-				if(request.getSelectedUserIds().contains(idConect)) {
+		  System.out.println(request.getSelectedUserIds().size());
+			if(request.getSelectedUserIds().size() >= 1 ) {
+				if(!request.getSelectedUserIds().contains(idConect)) {
+					
 					Conversation conv=new Conversation();
+					
 					conv.setChatName(request.getChatName());
 					conv.getParticipants().add(userService.getUser(idConect));
 					for(String userId:request.getSelectedUserIds()) {
 						UserModel user=userService.getUser(userId);
 						if(user != null) {
 							conv.getParticipants().add(user);
+							
+						/*	 // Créez une réponse JSON avec le succès et les données pertinentes
+					        Map<String, Object> response = new HashMap<>();
+					        response.put("success", true);
+					        response.put("data",conv);    */
 						}
 					}
 					conversationService.createNewConv(conv);
@@ -69,11 +80,44 @@ public class ConversationController {
 				
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("La liste de participants doit contenir au moins deux utilisateur ");
 				
+				
+			}			
 			}
-		    
-			 
-	    }
+			
 	  
+			
+		
+		 @GetMapping("/getAllConversation")
+		  public ResponseEntity<?> getAllConversations(){
+				List<Conversation> Conversation = conversationService.getAllConversations();
+				if(Conversation.size()>0) {
+					return new ResponseEntity<List<Conversation>>(Conversation, HttpStatus.OK);}
+					else {
+						return new ResponseEntity<>("No Conversation available", HttpStatus.NOT_FOUND);
+					}
+				} 
+	  
+		 
+		 @GetMapping("/{id}")
+		    public Conversation getConversationById(@PathVariable String id) {
+		        // Utilisez le service pour récupérer la conversation par son ID
+		        return conversationService.getConversationById(id);
+		    }
+		 
+		 
+		 @DeleteMapping("/{id}")
+		    public ResponseEntity<String> deleteConversation(@PathVariable String id) {
+		        boolean conversation = conversationService.deleteConversation(id);
+
+		        if (conversation) {
+		            return new ResponseEntity<>("Conversation supprimée avec succès", HttpStatus.OK);
+		        } else {
+		            return new ResponseEntity<>("La conversation n'a pas été trouvée ou n'a pas pu être supprimée", HttpStatus.NOT_FOUND);
+		        }
+		    }
+		 
+		 
+		 
 /*	public void createConversation(@RequestBody  Messages message) {
 		
 		KafkaTemplate<String, Messages> kafkaTemplate;
@@ -130,7 +174,8 @@ public class ConversationController {
 	    public ResponseEntity<List<Messages>> getConversationMessages(@PathVariable String conversationId) {
 	        List<Messages> messages = conversationService.getConversationMessages(conversationId);
 	        return ResponseEntity.ok(messages);
-	    }
+	    }*/
+	  
 /*	 @GetMapping("/getAllConversation")
 	  public ResponseEntity<?> getAllConversations(){
 			List<Conversation> Conversation = conversationService.getAllConversations();
@@ -140,7 +185,7 @@ public class ConversationController {
 					return new ResponseEntity<>("No Conversation available", HttpStatus.NOT_FOUND);
 				}
 			} 
-	 *//*
+	
 	  @DeleteMapping("/deleteConversationBy{id}")
 	    public ResponseEntity<Void> deleteConversation(@PathVariable String id) {
 	        boolean deleted = conversationService.deleteConversation(id);
