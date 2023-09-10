@@ -1,13 +1,10 @@
 package com.example.chatIslem.controllers;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,15 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.chatIslem.DTOs.request.ConversationRequest;
 import com.example.chatIslem.chat.services.ConversationService;
-import com.example.chatIslem.exceptions.EntityNotFoundException;
 import com.example.chatIslem.models.chat.Conversation;
-import com.example.chatIslem.models.chat.Messages;
 import com.example.chatIslem.models.user.UserModel;
 import com.example.chatIslem.services.user.UserService;
 import com.example.chatIslem.utils.TokenUtils;
 
 
-@CrossOrigin(origins = "http://localhost:3000")
 
 @RestController
 @RequestMapping("/api/conv")
@@ -38,14 +32,11 @@ public class ConversationController {
 	@Autowired
     UserService userService;
     @Autowired
-    TokenUtils tokenUtils;
+    private TokenUtils tokenUtils;
    /* @Autowired
     private KafkaTemplate kafkaTemplate;*/
   
-    @GetMapping("/AllUser")
-    public ResponseEntity<?> getAllUsers(){
-        return new ResponseEntity<>(userService.getAllUser(),HttpStatus.OK);
-      }
+   
 
 	  @PostMapping("/create")
 	    public ResponseEntity<?> createConversation(@RequestBody ConversationRequest request) {
@@ -60,16 +51,26 @@ public class ConversationController {
 					conv.getParticipants().add(userService.getUser(idConect));
 					for(String userId:request.getSelectedUserIds()) {
 						UserModel user=userService.getUser(userId);
+						
 						if(user != null) {
 							conv.getParticipants().add(user);
 							
-						/*	 // Créez une réponse JSON avec le succès et les données pertinentes
-					        Map<String, Object> response = new HashMap<>();
-					        response.put("success", true);
-					        response.put("data",conv);    */
 						}
+						
+						
 					}
-					conversationService.createNewConv(conv);
+					Conversation conv2=conversationService.createNewConv(conv);
+					for(String userId:request.getSelectedUserIds()) {
+						UserModel user=userService.getUser(userId);
+						if(user != null) {
+							user.getConversations().add(conv2);
+							userService.saveUser(user);
+						}
+						UserModel user2=userService.getUser(idConect);
+						user2.getConversations().add(conv2);
+						userService.saveUser(user2);
+						
+					}
 					return ResponseEntity.ok("Conversation cree avec succes ");
 				}else {
 					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("l'utilisateur connecte ne peut pas etre inclus dans la liste id ");
@@ -81,12 +82,31 @@ public class ConversationController {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("La liste de participants doit contenir au moins deux utilisateur ");
 				
 				
-			}			
+			}		
 			}
 			
+		/* @GetMapping("/getConversationByuserid")
+
+	  public ResponseEntity<List<Conversation>> myconversations(){
+			// return ResponseEntity.ok().body(conversationService.findconversationbyuserid(TokenUtils.ExtractId()));	
+			 }*/
 	  
-			
-		
+	  
+	  @GetMapping("/Conversations")
+	    public ResponseEntity<List<Conversation>> getConversationByUserId() {
+			 return ResponseEntity.ok().body(conversationService.findconversationbyuserid(tokenUtils.ExtractId()));	
+
+	  }
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
 		 @GetMapping("/getAllConversation")
 		  public ResponseEntity<?> getAllConversations(){
 				List<Conversation> Conversation = conversationService.getAllConversations();

@@ -189,6 +189,11 @@ public List<UserModel> getAllUsers() {
 	return userRepository.findAll();
 }
 
+@Override
+public List <Conversation> findconversationbyuserid(String extractId) {
+	return conversationRepository.findconversationbyuserid(extractId);
+}
+
 
 
 

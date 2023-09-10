@@ -10,7 +10,7 @@ public class KafkaTopic {
 
 	@Bean
 	public NewTopic MessagesEnvoyes() {
-		return TopicBuilder.name("Messages")
+		return TopicBuilder.name("msgkafka23")
 				.build();
 	}
 	

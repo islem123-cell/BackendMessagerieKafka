@@ -57,8 +57,8 @@ public class MessageKafkaController {
     
     @PostMapping("/publish")
     public ResponseEntity<?> publish(@RequestBody  MessageDto msg) {
-    	  System.out.println(conversationService.getConversationById("64f532dca6d4b53dae1bc8e9"));
-       // String idConnecte = tokenUtils.ExtractId();
+    	// System.out.println(msg.getContent()+":::::::::::"+msg.getConv_id());
+        String idConnecte = tokenUtils.ExtractId();
         String id_Connect=tokenUtils.ExtractId();
         // Récupérez la conversation en fonction de l'ID de la conversation fourni
         if (msg.getConv_id() != null) {
@@ -106,7 +106,15 @@ public class MessageKafkaController {
         }else {
         	return new ResponseEntity<>("L'identifiant de la conversation est null.", HttpStatus.BAD_REQUEST);
         }
+       // return  ResponseEntity.ok().body("helllo ");
     }
+    
+    
+    
+    
+    
+    
+    
     /*@PostMapping("/publish")
 	public ResponseEntity<?> publish(@RequestBody MessageDto msg){
 	String id_Connect=tokenUtils.ExtractId();

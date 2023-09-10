@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-/*
+
 @RestController
 @RequestMapping("/api/test")
 public class UserController {
@@ -33,10 +33,10 @@ public class UserController {
         return new ResponseEntity<>(userService.saveUser(user), HttpStatus.OK);
     }
 
-          /*@GetMapping("/AllUser")
+          @GetMapping("/AllUser")
           public ResponseEntity<?> getAllUsers(){
               return new ResponseEntity<>(userService.getAllUser(),HttpStatus.OK);
-            }*//*
+            }
     @GetMapping("/AllUserEnabled")
     public ResponseEntity<?> getAllUsersEnabled(){
         return new ResponseEntity<>(userService.findAllUserEnabled(),HttpStatus.OK);
@@ -47,8 +47,8 @@ public class UserController {
         return new ResponseEntity<>(userService.getUser(id),HttpStatus.OK);
         }
 
-
-   /*     @DeleteMapping("/{id}")
+/*
+       @DeleteMapping("/{id}")
         public ResponseEntity<?> deletUser(@PathVariable String id){
             UserModel user=userService.getUser(id);
             try {
@@ -58,8 +58,8 @@ public class UserController {
                 throw new EntityNotFoundException("user not found with id "+id);
             }
             return ResponseEntity.ok("user with id "+id+" is deleted !");
-        }*//*
-        
+        }
+        */
 
    @GetMapping("/{username}")
        public ResponseEntity<?> getByUsername(@PathVariable String username){
@@ -104,4 +104,3 @@ public class UserController {
 
 
 }
-*/

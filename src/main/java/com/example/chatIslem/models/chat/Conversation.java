@@ -7,8 +7,10 @@ import java.util.Optional;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.example.chatIslem.models.user.UserModel;
+import com.example.chatIslem.utils.TokenUtils;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +28,8 @@ public class Conversation {
 	private String id;
 	
 	private String chatName;
+	//   @Field("extractId") 
+	//private String extractId;
 /*	@DBRef
 	private UserModel recipient;
 	
@@ -37,6 +41,8 @@ public class Conversation {
 	private List<UserModel> participants=new ArrayList<>();
 
 	public List<Messages> message=new ArrayList<>();
+	
+	
 		
 //	@DBRef
 	//private List<Messages> messages ;

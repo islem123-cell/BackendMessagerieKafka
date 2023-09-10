@@ -1,6 +1,8 @@
 package com.example.chatIslem.models.user;
 
 import com.example.chatIslem.models.BaseEntity;
+import com.example.chatIslem.models.chat.Conversation;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +12,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Document(collection = "users")
@@ -29,6 +33,11 @@ public class UserModel extends BaseEntity {
     private String password;
     @DBRef
     private Set<Role> roles = new HashSet<>();
+    
+    @DBRef
+	private List<Conversation> conversations=new ArrayList<>();
+    
+    
     public UserModel(String firstName, String lastName, String username, String email, String password) {
 
         this.firstName = firstName;

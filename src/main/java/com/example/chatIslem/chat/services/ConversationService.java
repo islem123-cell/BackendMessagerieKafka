@@ -1,12 +1,17 @@
 package com.example.chatIslem.chat.services;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.stereotype.Service;
 
 import com.example.chatIslem.DTOs.request.ConversationRequest;
 import com.example.chatIslem.models.chat.Conversation;
 import com.example.chatIslem.models.chat.Messages;
 import com.example.chatIslem.models.user.UserModel;
+
+
+
 
 
 public interface ConversationService {
@@ -84,6 +89,8 @@ Conversation createConversation(ConversationRequest request);
 
 
 Conversation createNewConv (Conversation coversation);
+
+ List<Conversation> findconversationbyuserid(String extractId);
 
 
 
